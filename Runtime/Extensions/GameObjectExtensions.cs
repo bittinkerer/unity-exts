@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 
 namespace Packages.Estenis.UnityExts_
 {
@@ -17,5 +18,8 @@ namespace Packages.Estenis.UnityExts_
 
             return GetRoot(go.transform.parent.gameObject);
         }
+
+        public static Component[] GetComponentsRecursive<T>(this GameObject go) where T : Component =>
+            go.GetComponents<T>().Concat(go.GetComponentsInChildren<T>()).ToArray();
     }
 }
