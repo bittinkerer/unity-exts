@@ -1,0 +1,16 @@
+{
+    "name": "_UnityExtsEditor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:950a5a989d74f114d99f2262765a2521"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
