@@ -38,9 +38,15 @@ namespace Packages.Estenis.UnityExts_
             this IList<T> original, IList<T> updated)
             where T : IEquatable<T>
         {
-            HashSet<T> originalSet = new HashSet<T>(original);
-            HashSet<T> updatedSet = new HashSet<T>(updated);
+            var originalFiltered = original.Where(c => c != null);
+            var updatedFiltered = updated.Where(c => c != null);
+            if(!originalFiltered.Any() && !updatedFiltered.Any())
+            {
+                return new List<ListDifference<T>>();
+            }
 
+            HashSet<T> originalSet = new(originalFiltered ?? Enumerable.Empty<T>());
+            HashSet<T> updatedSet = new(updatedFiltered ?? Enumerable.Empty<T>());
             var removed = originalSet.Except(updatedSet);
             var added = updatedSet.Except(originalSet);
 
