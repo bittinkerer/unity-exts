@@ -1,6 +1,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 using System.Linq;
 using UnityEditor.SceneManagement;
 
@@ -21,7 +22,7 @@ namespace Packages.Estenis.UnityExts_
             this IList<T> original,
             IList<T> updated,
             ListDifferenceOptions listDifferenceOptions = ListDifferenceOptions.IGNORE_ORDER)
-            where T : IEquatable<T> =>
+            where T : IEquatable<T>, INullable =>
             listDifferenceOptions switch
             {
                 ListDifferenceOptions.IGNORE_ORDER => original.DifferencesIgnoreOrder<T>(updated),
@@ -30,16 +31,17 @@ namespace Packages.Estenis.UnityExts_
 
         private static List<ListDifference<T>> DifferencesAny<T>(
             this IList<T> original, IList<T> updated)
+            where T : IEquatable<T>, INullable
         {
             throw new NotImplementedException();
         }
 
         private static List<ListDifference<T>> DifferencesIgnoreOrder<T>(
             this IList<T> original, IList<T> updated)
-            where T : IEquatable<T>
+            where T : IEquatable<T>, INullable
         {
-            var originalFiltered = original.Where(c => c != null);
-            var updatedFiltered = updated.Where(c => c != null);
+            var originalFiltered = original.Where(c => c != null && !c.IsNull);
+            var updatedFiltered = updated.Where(c => c != null && !c.IsNull);
             if(!originalFiltered.Any() && !updatedFiltered.Any())
             {
                 return new List<ListDifference<T>>();
@@ -47,10 +49,10 @@ namespace Packages.Estenis.UnityExts_
 
             HashSet<T> originalSet = new(originalFiltered ?? Enumerable.Empty<T>());
             HashSet<T> updatedSet = new(updatedFiltered ?? Enumerable.Empty<T>());
-            var removed = originalSet.Except(updatedSet);
-            var added = updatedSet.Except(originalSet);
+            var removed = originalSet.Except(updatedSet).ToList();
+            var added = updatedSet.Except(originalSet).ToList();
 
-            return 
+            var result = 
                 added.Select(a =>
                     new ListDifference<T>
                     {
@@ -65,6 +67,7 @@ namespace Packages.Estenis.UnityExts_
                             Item = r
                         }))
                 .ToList();
+            return result;
         }
         
     }
