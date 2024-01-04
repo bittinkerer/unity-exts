@@ -35,6 +35,11 @@ namespace Packages.Estenis.UnityExts_
 
         public static Coroutine RunCoroutineOnceAfter(this MonoBehaviour monoBehaviour, Action action, float seconds) =>
             monoBehaviour.StartCoroutine(CoroutineHelpers.ExecuteOnceAfter(action, seconds));
+        //monoBehaviour.ExpectActiveGameObject().StartCoroutine(CoroutineHelpers.ExecuteOnceAfter(action, seconds));
+
+        public static Coroutine RunCoroutineOnceAfter(this MonoBehaviour monoBehaviour, Action action, Func<bool> afterCondition, float conditionCheckFrequency = 0.03f) =>
+            monoBehaviour.StartCoroutine(
+                CoroutineHelpers.ExecuteEveryUntil(() => { }, afterCondition, conditionCheckFrequency, action));
 
         public static Coroutine RunCoroutineEveryAfter(this MonoBehaviour monoBehaviour, Action action, float every, float after) =>
             monoBehaviour.StartCoroutine(
@@ -43,6 +48,7 @@ namespace Packages.Estenis.UnityExts_
         public static Coroutine RunCoroutineOnceAfterFrames(this MonoBehaviour monoBehaviour, Action action, int frames) =>
             monoBehaviour.StartCoroutine(
                 CoroutineHelpers.ExecuteOnceAfterFrames(action, frames));
+
 
         public static bool ValidateAgainstNull(this MonoBehaviour monoBehaviour, GameObject arg, string argName, Action onValidateFail)
         {
