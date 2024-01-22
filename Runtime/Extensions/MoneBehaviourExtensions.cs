@@ -33,9 +33,15 @@ namespace Packages.Estenis.UnityExts_
             monoBehaviour.StartCoroutine(
                 CoroutineHelpers.ExecuteEveryFor(action, everySeconds, forSeconds, executeAfter));
 
-        public static Coroutine RunCoroutineOnceAfter(this MonoBehaviour monoBehaviour, Action action, float seconds) =>
-            monoBehaviour.StartCoroutine(CoroutineHelpers.ExecuteOnceAfter(action, seconds));
-        //monoBehaviour.ExpectActiveGameObject().StartCoroutine(CoroutineHelpers.ExecuteOnceAfter(action, seconds));
+        public static Coroutine RunCoroutineOnceAfter(this MonoBehaviour monoBehaviour, Action action, float seconds)
+        {
+            if(monoBehaviour == null || !monoBehaviour.gameObject.activeSelf)
+            {
+                Debug.LogWarning($"{monoBehaviour?.gameObject.name ?? ""}.{nameof(RunCoroutineOnceAfter)} called when GameObject is not active.");
+                return null;
+            }
+            return monoBehaviour.StartCoroutine(CoroutineHelpers.ExecuteOnceAfter(action, seconds));
+        }
 
         public static Coroutine RunCoroutineOnceAfter(this MonoBehaviour monoBehaviour, Action action, Func<bool> afterCondition, float conditionCheckFrequency = 0.03f) =>
             monoBehaviour.StartCoroutine(
