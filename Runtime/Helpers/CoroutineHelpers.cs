@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Packages.com.estenis.unityexts.Runtime.Coroutines;
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -26,7 +27,7 @@ namespace Packages.Estenis.UnityExts_
         {
             for (int i = 0; i < frames; i++)
             {
-                yield return null;
+                yield return new WaitForFrames(frames);
             }
             action();
         }
