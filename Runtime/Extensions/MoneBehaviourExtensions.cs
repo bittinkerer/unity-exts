@@ -51,6 +51,10 @@ namespace Packages.Estenis.UnityExts_
             monoBehaviour.StartCoroutine(
                 CoroutineHelpers.ExecuteEveryAfter(action, every, after));
 
+        public static Coroutine RunCoroutineEveryAfterUntil(this MonoBehaviour monoBehaviour, Action action, float every, float after, Func<bool> until, Action executeAfter = null) =>
+            monoBehaviour.StartCoroutine(
+                CoroutineHelpers.ExecuteEveryAfterUntil(action, every, after, until, executeAfter));
+
         public static Coroutine RunCoroutineOnceAfterFrames(this MonoBehaviour monoBehaviour, Action action, int frames) =>
             monoBehaviour.StartCoroutine(
                 CoroutineHelpers.ExecuteOnceAfterFrames(action, frames));

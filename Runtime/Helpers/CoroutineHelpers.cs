@@ -106,6 +106,16 @@ namespace Packages.Estenis.UnityExts_
             onUntilExecute?.Invoke();
         }
 
+        public static IEnumerator ExecuteEveryAfterUntil(Action action, float everySeconds, float afterSeconds, Func<bool> until, Action onUntilExecute)        
+        {
+            yield return new WaitForSeconds(afterSeconds);
+            while (!until())
+            {
+                action();
+                yield return new WaitForSeconds(everySeconds);
+            }
 
+            onUntilExecute?.Invoke();
+        }
     }
 }

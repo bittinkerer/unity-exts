@@ -7,8 +7,7 @@ namespace Packages.Estenis.UnityExts_
     {
         public static GameObject GetRoot(this GameObject go)
         {
-            var result = go.GetComponent<RootGameObject>();
-            if (result != null)
+            if (go.TryGetComponent<RootGameObject>(out var result))
                 return result.gameObject;
 
             if(go.transform.parent == null)
