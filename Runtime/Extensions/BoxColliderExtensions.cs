@@ -14,6 +14,6 @@ namespace Packages.Estenis.UnityExts_
 
         public static Vector3 WorldTopPosition(this BoxCollider boxCollider) => WorldCenterPosition(boxCollider) + new Vector3(0, BoxSize(boxCollider).y / 2, 0);
 
-        public static Vector3 BoxSize(this BoxCollider boxCollider) => boxCollider.bounds.size;
+        public static Vector3 BoxSize(this BoxCollider boxCollider) => boxCollider.size;
     }
 }
