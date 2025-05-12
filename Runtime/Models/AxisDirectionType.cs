@@ -1,5 +1,4 @@
-﻿namespace Packages.com.estenis.unityexts.Runtime.Models
-{
+﻿
     public enum AxisDirectionType
     {
         XYZ,
@@ -10,4 +9,3 @@
         Y,
         Z
     }
-}
