@@ -111,5 +111,8 @@ namespace Packages.Estenis.UnityExts_ {
       return (object)monoBehaviour == null;
     }
 
+    public static bool ContainsReference( this MonoBehaviour monoBehaviour, ScriptableObject scriptableObject ) {
+      return false;
+    }
   }
 }
